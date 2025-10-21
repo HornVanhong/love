@@ -4,382 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Our Anniversary 💖</title>
-    <style>
-      /* --- Global Styles --- */
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
-      body {
-        font-family: "Poppins", sans-serif;
-        background: linear-gradient(135deg, #ff9a9e, #fad0c4);
-        color: white;
-        text-align: center;
-        line-height: 1.6;
-        overflow-x: hidden;
-      }
-      h1 {
-        font-size: 2.2em;
-        margin: 30px 10px;
-      }
-      h2 {
-        font-weight: 400;
-        margin: 15px 0;
-      }
-      p {
-        margin: 15px auto 30px;
-        width: 90%;
-        max-width: 600px;
-        padding: 0 10px;
-      }
-
-      /* --- Password Overlay --- */
-      #tap-to-play {
-        position: fixed;
-        inset: 0;
-        background: rgba(0, 0, 0, 0.85);
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        z-index: 999;
-        padding: 20px;
-        text-align: center;
-        transition: opacity 0.5s ease;
-      }
-      #tap-to-play p {
-        font-size: 1.2em;
-        margin-bottom: 15px;
-      }
-      #tap-to-play input {
-        padding: 10px 15px;
-        border-radius: 25px;
-        border: none;
-        font-size: 1em;
-        margin-bottom: 10px;
-        outline: none;
-        width: 150px;
-        text-align: center;
-      }
-      #tap-to-play button {
-        padding: 10px 25px;
-        border: none;
-        border-radius: 25px;
-        background: #ff6f91;
-        color: white;
-        font-size: 1em;
-        cursor: pointer;
-        transition: background 0.3s ease;
-      }
-      #tap-to-play button:hover {
-        background: #ff8fab;
-      }
-      #wrong-password {
-        color: #ff6f91;
-        margin-top: 10px;
-        display: none;
-      }
-
-      /* --- Couple Wallpaper --- */
-      .love-wallpaper {
-        margin: 50px 0;
-        padding: 0 10px;
-      }
-      .love-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 30px;
-        flex-wrap: wrap;
-        position: relative;
-        z-index: 1;
-      }
-      .profile {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .profile img {
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        border: 3px solid white;
-        object-fit: cover;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s;
-      }
-      .profile img:hover {
-        transform: scale(1.05);
-      }
-      .name {
-        margin-top: 8px;
-        font-size: 1em;
-        font-weight: bold;
-        word-break: break-word;
-      }
-
-      .love-line {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 5px 0;
-      }
-      .heart-center {
-        font-size: 2.5em;
-        animation: heartbeat 1s infinite;
-        margin-bottom: 10px;
-      }
-      @keyframes heartbeat {
-        0%,
-        100% {
-          transform: scale(1);
-        }
-        50% {
-          transform: scale(1.3);
-        }
-      }
-      .love-stats {
-        text-align: center;
-        font-size: 1em;
-      }
-      .progress-container {
-        width: 150px;
-        height: 12px;
-        background: rgba(255, 255, 255, 0.3);
-        border-radius: 6px;
-        margin-top: 5px;
-      }
-      .progress-bar {
-        height: 100%;
-        background: #ff6f91;
-        width: 0%;
-        border-radius: 6px;
-        transition: width 1s ease;
-      }
-
-      /* --- Gallery & Videos Grid --- */
-      .gallery,
-      .videos {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-        gap: 15px;
-        width: 95%;
-        max-width: 1100px;
-        margin: 20px auto 40px;
-      }
-      .gallery img,
-      .videos video {
-        width: 100%;
-        height: 200px; /* fixed height */
-        object-fit: cover; /* fill box nicely */
-        border-radius: 15px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-        transition: transform 0.3s ease;
-      }
-      .gallery img:hover,
-      .videos video:hover {
-        transform: scale(1.05);
-      }
-
-      /* --- Footer --- */
-      footer {
-        margin-top: 40px;
-        font-size: 1em;
-        opacity: 0.85;
-        padding-bottom: 20px;
-      }
-
-      /* --- Floating Hearts & Flowers --- */
-      .floating {
-        position: absolute;
-        bottom: -50px;
-        width: 20px;
-        height: 20px;
-        pointer-events: none;
-        z-index: 1;
-      }
-      .heart {
-        background-color: rgba(255, 0, 100, 0.7);
-        clip-path: polygon(
-          50% 0%,
-          100% 35%,
-          80% 100%,
-          50% 75%,
-          20% 100%,
-          0% 35%
-        );
-      }
-      .flower {
-        background-image: url("flower.png");
-        background-size: cover;
-        border-radius: 50%;
-      }
-
-      /* --- Responsive Adjustments --- */
-      @media (max-width: 1024px) {
-        .profile img {
-          width: 100px;
-          height: 100px;
-        }
-        .progress-container {
-          width: 130px;
-        }
-        .heart-center {
-          font-size: 2em;
-        }
-      }
-      @media (max-width: 768px) {
-        h1 {
-          font-size: 1.8em;
-        }
-        h2 {
-          font-size: 1.4em;
-        }
-        .love-container {
-          flex-wrap: nowrap;
-          justify-content: space-around;
-          overflow-x: auto;
-          padding: 10px 0;
-        }
-        .profile,
-        .love-line {
-          flex: 0 0 auto;
-          margin: 0 10px;
-        }
-        .profile img {
-          width: 70px;
-          height: 70px;
-        }
-        .heart-center {
-          font-size: 1.8em;
-        }
-        .name {
-          font-size: 10px;
-        }
-        .progress-container {
-          width: 120px;
-          height: 10px;
-        }
-        .gallery img,
-        .videos video {
-          height: 150px;
-        }
-        #days-together {
-          font-size: 10px;
-        }
-      }
-      @media (max-width: 480px) {
-        h1 {
-          font-size: 1.5em;
-        }
-        h2 {
-          font-size: 1.2em;
-        }
-        .profile img {
-          width: 50px;
-          height: 50px;
-        }
-        .heart-center {
-          font-size: 1.5em;
-        }
-        .progress-container {
-          width: 100px;
-          height: 8px;
-        }
-        .name {
-          font-size: 10px;
-        }
-        .gallery,
-        .videos {
-          grid-template-columns: repeat(2, 1fr);
-        }
-        .gallery img,
-        .videos video {
-          height: 200px;
-        }
-        p {
-          width: 85%;
-        }
-        #tap-to-play input {
-          width: 120px;
-        }
-        #days-together {
-          font-size: 10px;
-        }
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <h1>Happy 1 Year & 4 Months Anniversary 💕</h1>
-    <h2>22 October 2025</h2>
-    <p>
-      Every moment with you is a memory I’ll cherish forever. You are my
-      happiness, my best friend, and my forever love.
-    </p>
-
-    <!-- Couple Wallpaper Section -->
-    <div class="love-wallpaper">
-      <h2>💕 Our Love 💕</h2>
-      <div class="love-container">
-        <div class="profile">
-          <img src="Hong.jpg" alt="Your Profile" />
-          <div class="name">Horn Vanhong</div>
-        </div>
-        <div class="love-line">
-          <div class="heart-center">❤️</div>
-          <div class="love-stats">
-            <div id="days-together">Together: 0y 0m 0d</div>
-            <div id="love-percentage">Love: 0%</div>
-            <div class="progress-container">
-              <div class="progress-bar" id="progress-bar"></div>
-            </div>
-          </div>
-        </div>
-        <div class="profile">
-          <img src="Nit.jpg" alt="Girlfriend Profile" />
-          <div class="name">Met Sreynit</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Gallery Section -->
-    <div class="gallery">
-      <img src="p1.jpg" alt="Photo 1" />
-      <img src="p2.jpg" alt="Photo 2" />
-      <img src="p3.jpg" alt="Photo 3" />
-      <img src="p4.jpg" alt="Photo 4" />
-      <img src="p5.jpg" alt="Photo 5" />
-      <img src="p6.jpg" alt="Photo 6" />
-      <img src="p7.jpg" alt="Photo 7" />
-      <img src="p8.jpg" alt="Photo 8" />
-      <img src="p9.jpg" alt="Photo 8" />
-      <img src="p10.jpg" alt="Photo 8" />
-      <img src="p11.jpg" alt="Photo 8" />
-      <img src="p12.jpg" alt="Photo 8" />
-    </div>
-
-    <!-- Video Section -->
-    <div class="videos">
-      <video autoplay loop muted playsinline>
-        <source src="IMG_0055.MOV" type="video/mp4" />
-      </video>
-      <video autoplay loop muted playsinline>
-        <source src="IMG_0065.MOV" type="video/mp4" />
-      </video>
-      <video autoplay loop muted playsinline>
-        <source src="IMG_0066.MOV" type="video/mp4" />
-      </video>
-      <video autoplay loop muted playsinline>
-        <source src="video_2025-10-21_19-35-19.mp4" type="video/mp4" />
-      </video>
-    </div>
-
-    <!-- Background Music -->
-    <audio id="bg-music" loop>
-      <source src="wedding-romantic-love-music-409293.mp3" type="audio/mpeg" />
-    </audio>
-
     <!-- Password Overlay -->
     <div id="tap-to-play">
       <p>💖 Enter the date we started our love 💖</p>
@@ -388,97 +15,85 @@
       <p id="wrong-password">Wrong password! Try again 💔</p>
     </div>
 
-    <footer>Made with ❤️ by Horn Vanhong</footer>
+    <!-- Countdown Page -->
+    <div id="countdown-page">
+      <img src="p13.jpg" alt="Countdown Image" class="countdown-img" />
+      <div id="countdown-overlay">
+        <div id="countdown-text">💖 Countdown to Our Anniversary 💖</div>
+        <div id="countdown-timer"></div>
+      </div>
+    </div>
 
-    <script>
-      // Floating hearts & flowers
-      function createFloating() {
-        const elem = document.createElement("div");
-        const isFlower = Math.random() < 0.3;
-        elem.className = "floating " + (isFlower ? "flower" : "heart");
-        const size = 10 + Math.random() * 25;
-        elem.style.width = elem.style.height = size + "px";
-        elem.style.left = Math.random() * window.innerWidth + "px";
-        if (!isFlower)
-          elem.style.backgroundColor = `rgba(255,${Math.floor(
-            Math.random() * 150
-          )},${Math.floor(Math.random() * 150)},${0.7 + Math.random() * 0.3})`;
-        document.body.appendChild(elem);
-        const speed = 4000 + Math.random() * 4000;
-        elem.animate(
-          [
-            { transform: "translateY(0) scale(1)", opacity: 1 },
-            {
-              transform: `translateY(-${window.innerHeight + 100}px) scale(${
-                0.5 + Math.random()
-              })`,
-              opacity: 0,
-            },
-          ],
-          { duration: speed, easing: "linear" }
-        );
-        setTimeout(() => elem.remove(), speed);
-      }
-      setInterval(createFloating, 300);
+    <!-- Anniversary Page -->
+    <div id="anniversary-page">
+      <h1>Happy 1 Year & 4 Months Anniversary 💕</h1>
+      <h2>22 October 2025</h2>
+      <p>
+        Every moment with you is a memory I’ll cherish forever. You are my
+        happiness, my best friend, and my forever love.
+      </p>
 
-      // Password functionality
-      const overlay = document.getElementById("tap-to-play");
-      const button = document.getElementById("start-btn");
-      const passwordInput = document.getElementById("love-password");
-      const wrongMsg = document.getElementById("wrong-password");
-      const correctPassword = "22062024"; // 22 June 2024
-      button.addEventListener("click", () => {
-        if (passwordInput.value === correctPassword) {
-          document.getElementById("bg-music").play();
-          overlay.style.opacity = 0;
-          setTimeout(() => (overlay.style.display = "none"), 500);
-        } else {
-          wrongMsg.style.display = "block";
-          passwordInput.value = "";
-        }
-      });
-      passwordInput.addEventListener("keypress", (e) => {
-        if (e.key === "Enter") button.click();
-      });
+      <!-- Couple Section -->
+      <div class="love-wallpaper">
+        <h2>💕 Our Love 💕</h2>
+        <div class="love-container">
+          <div class="profile">
+            <img src="Hong.jpg" alt="Your Profile" />
+            <div class="name">Horn Vanhong</div>
+          </div>
+          <div class="love-line">
+            <div class="heart-center">❤️</div>
+            <div class="love-stats">
+              <div id="days-together">Together: 0y 0m 0d</div>
+              <div id="love-percentage">Love: 0%</div>
+              <div class="progress-container">
+                <div class="progress-bar" id="progress-bar"></div>
+              </div>
+            </div>
+          </div>
+          <div class="profile">
+            <img src="Nit.jpg" alt="Girlfriend Profile" />
+            <div class="name">Met Sreynit</div>
+          </div>
+        </div>
+      </div>
 
-      // Love counter & progress
-      const startDate = new Date(2024, 5, 22); // June=5
-      const daysElem = document.getElementById("days-together");
-      const loveElem = document.getElementById("love-percentage");
-      const progressBar = document.getElementById("progress-bar");
-      function updateLoveStats() {
-        const today = new Date();
-        let years = today.getFullYear() - startDate.getFullYear();
-        let months = today.getMonth() - startDate.getMonth();
-        let days = today.getDate() - startDate.getDate();
-        if (days < 0) {
-          months--;
-          const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-          days += prevMonth.getDate();
-        }
-        if (months < 0) {
-          years--;
-          months += 12;
-        }
-        daysElem.textContent = `Together: ${years}y ${months}m ${days}d`;
-        const anniversaryThisYear = new Date(
-          today.getFullYear(),
-          startDate.getMonth(),
-          startDate.getDate()
-        );
-        const nextAnniversary = new Date(
-          today.getFullYear() + 1,
-          startDate.getMonth(),
-          startDate.getDate()
-        );
-        const totalTime = nextAnniversary - anniversaryThisYear;
-        const passedTime = today - anniversaryThisYear;
-        const percentage = Math.floor((passedTime / totalTime) * 100);
-        loveElem.textContent = `Love: ${percentage}%`;
-        progressBar.style.width = percentage + "%";
-      }
-      updateLoveStats();
-      setInterval(updateLoveStats, 1000 * 60 * 60);
-    </script>
+      <!-- Gallery Section -->
+      <div class="gallery">
+        <img src="p1.jpg" alt="Photo 1" />
+        <img src="p2.jpg" alt="Photo 2" />
+        <img src="p3.jpg" alt="Photo 3" />
+        <img src="p5.jpg" alt="Photo 4" />
+        <img src="p6.jpg" alt="Photo 4" />
+        <img src="p7.jpg" alt="Photo 4" />
+        <img src="p8.jpg" alt="Photo 4" />
+        <img src="p9.jpg" alt="Photo 4" />
+        <img src="p10.jpg" alt="Photo 4" />
+        <img src="p11.jpg" alt="Photo 4" />
+        <img src="p12.jpg" alt="Photo 4" />
+      </div>
+
+      <!-- Video Section -->
+      <div class="videos">
+        <video autoplay loop muted playsinline>
+          <source src="IMG_0055.MOV" type="video/mp4" />
+          <source src="IMG_0065.MOV" type="video/mp4" />
+          <source src="IMG_0066.MOV" type="video/mp4" />
+          <source src="video_2025-10-21_19-35-19.mp4" type="video/mp4" />
+        </video>
+      </div>
+
+      <!-- Background Music -->
+      <audio id="bg-music" loop>
+        <source
+          src="wedding-romantic-love-music-409293.mp3"
+          type="audio/mpeg"
+        />
+      </audio>
+
+      <footer>Made with ❤️ by Horn Vanhong</footer>
+    </div>
+
+    <script src="index.js"></script>
   </body>
 </html>
