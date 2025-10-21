@@ -1,18 +1,18 @@
-// Password functionality
+// Elements
 const overlay = document.getElementById("tap-to-play");
 const button = document.getElementById("start-btn");
 const passwordInput = document.getElementById("love-password");
 const wrongMsg = document.getElementById("wrong-password");
-const correctPassword = "22062024";
-
 const countdownPage = document.getElementById("countdown-page");
 const anniversaryPage = document.getElementById("anniversary-page");
 const countdownTimer = document.getElementById("countdown-timer");
+const correctPassword = "22062024"; // 22 June 2024
 
+// Password check
 button.addEventListener("click", () => {
   if (passwordInput.value === correctPassword) {
     overlay.style.display = "none";
-    countdownPage.style.display = "block";
+    countdownPage.classList.remove("hidden");
     startCountdown();
   } else {
     wrongMsg.style.display = "block";
@@ -24,20 +24,21 @@ passwordInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") button.click();
 });
 
-// Countdown to 22 Oct 2025
+// Countdown
+const targetDate = new Date(2025, 9, 22); // 22 Oct 2025
+
 function startCountdown() {
-  const anniversaryDate = new Date(2025, 9, 22, 0, 0, 0); // October=9
-  const timerInterval = setInterval(() => {
+  const interval = setInterval(() => {
     const now = new Date();
-    const diff = anniversaryDate - now;
+    const diff = targetDate - now;
 
     if (diff <= 0) {
-      clearInterval(timerInterval);
-      countdownPage.style.display = "none";
-      anniversaryPage.style.display = "block";
-      startLoveStats();
-      startFloating();
-      playMusic();
+      clearInterval(interval);
+      alert("Happy Anniversary 💖 My love! You are my everything! 💕");
+      countdownPage.classList.add("hidden");
+      anniversaryPage.classList.remove("hidden");
+      const bgMusic = document.getElementById("bg-music");
+      if (bgMusic) bgMusic.play();
       return;
     }
 
@@ -50,81 +51,47 @@ function startCountdown() {
   }, 1000);
 }
 
-// Love counter & progress
-function startLoveStats() {
-  const startDate = new Date(2024, 5, 22);
-  const daysElem = document.getElementById("days-together");
-  const loveElem = document.getElementById("love-percentage");
-  const progressBar = document.getElementById("progress-bar");
+// Love counter
+const startDate = new Date(2024, 5, 22); // 22 June 2024
+const daysElem = document.getElementById("days-together");
+const loveElem = document.getElementById("love-percentage");
+const progressBar = document.getElementById("progress-bar");
 
-  function updateLoveStats() {
-    const today = new Date();
-    let years = today.getFullYear() - startDate.getFullYear();
-    let months = today.getMonth() - startDate.getMonth();
-    let days = today.getDate() - startDate.getDate();
-    if (days < 0) {
-      months--;
-      const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
-      days += prevMonth.getDate();
-    }
-    if (months < 0) {
-      years--;
-      months += 12;
-    }
-    daysElem.textContent = `Together: ${years}y ${months}m ${days}d`;
+function updateLoveStats() {
+  if (!daysElem) return;
+  const today = new Date();
+  let years = today.getFullYear() - startDate.getFullYear();
+  let months = today.getMonth() - startDate.getMonth();
+  let days = today.getDate() - startDate.getDate();
 
-    const anniversaryThisYear = new Date(
-      today.getFullYear(),
-      startDate.getMonth(),
-      startDate.getDate()
-    );
-    const nextAnniversary = new Date(
-      today.getFullYear() + 1,
-      startDate.getMonth(),
-      startDate.getDate()
-    );
-    const totalTime = nextAnniversary - anniversaryThisYear;
-    const passedTime = today - anniversaryThisYear;
-    const percentage = Math.floor((passedTime / totalTime) * 100);
-    loveElem.textContent = `Love: ${percentage}%`;
-    progressBar.style.width = percentage + "%";
+  if (days < 0) {
+    months--;
+    const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
+    days += prevMonth.getDate();
   }
-  updateLoveStats();
-  setInterval(updateLoveStats, 1000 * 60 * 60);
+  if (months < 0) {
+    years--;
+    months += 12;
+  }
+
+  daysElem.textContent = `Together: ${years}y ${months}m ${days}d`;
+
+  const anniversaryThisYear = new Date(
+    today.getFullYear(),
+    startDate.getMonth(),
+    startDate.getDate()
+  );
+  const nextAnniversary = new Date(
+    today.getFullYear() + 1,
+    startDate.getMonth(),
+    startDate.getDate()
+  );
+  const totalTime = nextAnniversary - anniversaryThisYear;
+  const passedTime = today - anniversaryThisYear;
+  const percentage = Math.floor((passedTime / totalTime) * 100);
+  loveElem.textContent = `Love: ${percentage}%`;
+  progressBar.style.width = percentage + "%";
 }
 
-// Floating hearts & flowers
-function startFloating() {
-  setInterval(() => {
-    const elem = document.createElement("div");
-    const isFlower = Math.random() < 0.3;
-    elem.className = "floating " + (isFlower ? "flower" : "heart");
-    const size = 10 + Math.random() * 25;
-    elem.style.width = elem.style.height = size + "px";
-    elem.style.left = Math.random() * window.innerWidth + "px";
-    if (!isFlower)
-      elem.style.backgroundColor = `rgba(255,${Math.floor(
-        Math.random() * 150
-      )},${Math.floor(Math.random() * 150)},${0.7 + Math.random() * 0.3})`;
-    document.body.appendChild(elem);
-    const speed = 4000 + Math.random() * 4000;
-    elem.animate(
-      [
-        { transform: "translateY(0) scale(1)", opacity: 1 },
-        {
-          transform: `translateY(-${window.innerHeight + 100}px) scale(${
-            0.5 + Math.random()
-          })`,
-          opacity: 0,
-        },
-      ],
-      { duration: speed, easing: "linear" }
-    );
-    setTimeout(() => elem.remove(), speed);
-  }, 300);
-}
-
-// Play background music
-function playMusic() {
-  document.getElementById("bg-music").play();
-}
+updateLoveStats();
+setInterval(updateLoveStats, 1000 * 60 * 60);
