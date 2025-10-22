@@ -1,4 +1,4 @@
-// Password functionality
+// --- Password functionality ---
 const overlay = document.getElementById("tap-to-play");
 const button = document.getElementById("start-btn");
 const passwordInput = document.getElementById("love-password");
@@ -13,10 +13,10 @@ button.addEventListener("click", () => {
     overlay.style.display = "none";
     countdownPage.classList.remove("hidden");
 
-    // Play music after user interaction (works on mobile)
+    // Play music after user interaction (mobile-friendly)
     if (bgMusic)
       bgMusic.play().catch(() => {
-        console.log("Music blocked");
+        console.log("Music blocked by browser until user interaction");
       });
 
     startCountdown();
@@ -30,9 +30,9 @@ passwordInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter") button.click();
 });
 
-// Countdown timer
+// --- Countdown timer ---
 const countdownTimer = document.getElementById("countdown-timer");
-const targetDate = new Date(2025, 9, 22); // October = 9
+const targetDate = new Date(2025, 9, 22); // October = 9 (zero-indexed)
 
 function startCountdown() {
   const interval = setInterval(() => {
@@ -41,9 +41,10 @@ function startCountdown() {
 
     if (diff <= 0) {
       clearInterval(interval);
-      alert("Happy Anniversary 💖 My love! You are my everything! 💕");
       countdownPage.classList.add("hidden");
       anniversaryPage.classList.remove("hidden");
+
+      alert("💖 Happy Anniversary, my love! 💕 You are my everything!");
       if (bgMusic)
         bgMusic.play().catch(() => {
           console.log("Music blocked");
@@ -60,8 +61,8 @@ function startCountdown() {
   }, 1000);
 }
 
-// Love counter & progress
-const startDate = new Date(2024, 5, 22);
+// --- Love counter & progress bar ---
+const startDate = new Date(2024, 5, 22); // 22 June 2024
 const daysElem = document.getElementById("days-together");
 const loveElem = document.getElementById("love-percentage");
 const progressBar = document.getElementById("progress-bar");
@@ -72,6 +73,7 @@ function updateLoveStats() {
   let years = today.getFullYear() - startDate.getFullYear();
   let months = today.getMonth() - startDate.getMonth();
   let days = today.getDate() - startDate.getDate();
+
   if (days < 0) {
     months--;
     const prevMonth = new Date(today.getFullYear(), today.getMonth(), 0);
@@ -81,6 +83,7 @@ function updateLoveStats() {
     years--;
     months += 12;
   }
+
   daysElem.textContent = `Together: ${years}y ${months}m ${days}d`;
 
   const anniversaryThisYear = new Date(
@@ -96,9 +99,31 @@ function updateLoveStats() {
   const totalTime = nextAnniversary - anniversaryThisYear;
   const passedTime = today - anniversaryThisYear;
   const percentage = Math.floor((passedTime / totalTime) * 100);
+
   loveElem.textContent = `Love: ${percentage}%`;
   progressBar.style.width = percentage + "%";
 }
 
 updateLoveStats();
 setInterval(updateLoveStats, 1000 * 60 * 60);
+
+// --- Floating Hearts & Flowers Animation ---
+const floatingContainer = document.querySelector(".floating-container");
+const icons = ["💖", "🌸", "🌷", "💐", "❤️", "🌹"];
+
+function createFloatingIcon() {
+  const span = document.createElement("span");
+  span.textContent = icons[Math.floor(Math.random() * icons.length)];
+  span.classList.add("floating");
+  span.style.left = Math.random() * 100 + "vw";
+  span.style.animationDuration = 8 + Math.random() * 5 + "s";
+  span.style.fontSize = 16 + Math.random() * 24 + "px";
+  floatingContainer.appendChild(span);
+
+  setTimeout(() => {
+    span.remove();
+  }, 13000); // remove after animation ends
+}
+
+// Create new floating icon every 0.5 seconds
+setInterval(createFloatingIcon, 500);
